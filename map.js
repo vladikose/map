@@ -4,8 +4,7 @@ jQuery(document).ready(function($){
     var center = [59.939095, 30.315868];
     var myMap = new ymaps.Map('map', {
       center: [59.939095, 30.315868],
-      zoom: 8,
-      controls: []
+      zoom: 8
     });
 
     var searchControl = new ymaps.control.SearchControl({
@@ -32,33 +31,10 @@ jQuery(document).ready(function($){
       gridSize: 128
     });
 
-    objectManager.options.set({
-  clusterBalloonContentLayout: 'cluster#balloonAccordion',
-  clusterBalloonItemContentLayout: fetch('../map/data.json')
-    .then(response => response.json())
-    .then(data => customItemContentLayout(data))
-});
 
-function clusterBalloonItemContentLayout(cluster) {
-  const items = cluster.properties.geoObjects.map(item => `
-    <ul class="card-info">
-      <li><b>Название:</b> ${item.properties.name}</li>
-      <li><b>Адрес:</b> ${item.properties.address}</li>
-      <li><b>Компания:</b> ${item.properties.company}</li>
-      <li><b>Телефон:</b> ${item.properties.phone}</li>
-    </ul>
-  `).join('');
-  return `
-    <div class="cluster-balloon">
-      ${items}
-    </div>
-  `;
-}
     objectManager.objects.options.set({
       preset: 'map_info'
     });
-
-
 
     // Добавляем обработчик события objects.add для objectManager
     objectManager.events.add('objectsadd', function() {
