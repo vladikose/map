@@ -13,10 +13,9 @@ jQuery(document).ready(function($){
       }
     });
 
-    myMap.controls.add(searchControl);
-
     var objectManager = new ymaps.ObjectManager({
-      clusterize: true
+      clusterize: true,
+      clusterHasBalloon: true,
     });
 
     var clusterer = new ymaps.Clusterer({
@@ -31,7 +30,6 @@ jQuery(document).ready(function($){
       gridSize: 128
     });
 
-
     objectManager.objects.options.set({
       preset: 'map_info'
     });
@@ -44,12 +42,12 @@ jQuery(document).ready(function($){
     myMap.geoObjects.add(objectManager);
 
     $.ajax({
-      url: '../map/data.json',
-      dataType: 'json',
-      success: function(data) {
-        objectManager.add(data);
-      }
-    });
+    url: '../map/data.json',
+    dataType: 'json',
+    success: function(data) {
+      objectManager.add(data);
+    }
+  });
 
     myMap.options.set('maxZoom', 16);
 
