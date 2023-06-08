@@ -18,6 +18,15 @@ jQuery(document).ready(function($){
       clusterHasBalloon: true,
     });
 
+    var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
+      '<ul class=list>',
+      // Выводим в цикле список всех геообъектов.
+      '{% for geoObject in properties.geoObjects %}',
+      '<li><a href=# data-placemarkid="{{ geoObject.properties.company }}" class="list_item">{{ geoObject.properties.address|raw }}</a></li>',
+      '{% endfor %}',
+      '</ul>'
+    ].join(''));
+
     var clusterer = new ymaps.Clusterer({
       clusterIcons: [{
         size: [32, 32],
@@ -27,7 +36,8 @@ jQuery(document).ready(function($){
       clusterBalloonPanelMaxMapArea: 0,
       clusterBalloonOffset: [0, 0],
       clusterBalloonMinHeight: 150,
-      gridSize: 128
+      gridSize: 128,
+      clusterBalloonContentLayout: customBalloonContentLayout
     });
 
     objectManager.objects.options.set({
